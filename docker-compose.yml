@@ -1,0 +1,35 @@
+version: '2'
+services:
+
+  client:
+    hostname: client
+    build: ./build/client
+    networks:
+      internal:
+        aliases: 
+        - client
+    environment:
+      - CLIENT_ID=1
+    volumes:
+      - ./data/client:/data/client
+    ports:
+      - "22:22"
+  
+  controller:
+    hostname: controller
+    build: ./build/controller
+    environment:
+    - ANSIBLE_SSH_ARGS="-o StrictHostKeyChecking=no"
+    depends_on:
+      - client
+    networks:
+      internal:
+        aliases: 
+        - controller
+    volumes:
+      - ./data/controller:/data/controller
+    command: /data/controller/command.sh
+
+networks:
+  internal:
+

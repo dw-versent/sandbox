@@ -1,0 +1,14 @@
+# Support for Docker Compose v2, https://docs.docker.com/compose/overview/
+version: '2'
+services:
+
+  base_sshd:
+    hostname: base_sshd
+    build: ./build/base_sshd
+    environment:
+      - SSHD=1
+    volumes:
+      - ./data/base_sshd:/data/base_sshd
+    ports:
+      - "22:22"
+
